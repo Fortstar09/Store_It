@@ -60,7 +60,6 @@
 }
 
 @layer utilities {
-
   /* ===== TYPOGRAPHY */
   .h1 {
     @apply text-[34px] leading-[42px] font-bold;
@@ -387,6 +386,10 @@
 
   .error-toast {
     @apply bg-red !rounded-[10px] !important;
+  }
+
+  .error-success {
+    @apply bg-green !rounded-[10px] !important;
   }
 
   /* Header */

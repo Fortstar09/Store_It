@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { sendEmailOTP, verifySecret } from "@/lib/actions/user.action";
+import { useToast } from "@/hooks/use-toast";
 
 const OTPModal = ({
   accountId,
@@ -27,6 +28,7 @@ const OTPModal = ({
   email: string;
 }) => {
   const router = useRouter();
+  const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(true);
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -38,10 +40,17 @@ const OTPModal = ({
     try {
       const sessionId = await verifySecret({ accountId, password });
 
-      console.log({ sessionId });
-
       if (sessionId) router.push("/");
     } catch (error) {
+      setIsLoading(false);
+      return toast({
+        description: (
+          <p className="body-2 text-white">
+            Invalid <span className="font-semibold">OTP</span>
+          </p>
+        ),
+        className: "error-toast",
+      });
       console.log("Failed to verify OTP", error);
     }
 
@@ -90,6 +99,7 @@ const OTPModal = ({
               onClick={handleSubmit}
               className="shad-submit-btn h-12"
               type="button"
+              disabled={isLoading}
             >
               Submit
               {isLoading && (

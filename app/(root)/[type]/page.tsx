@@ -12,11 +12,6 @@ const Page = async ({ searchParams, params }: SearchParamProps) => {
 
   const types = getFileTypesParams(type) as FileType[];
 
-  // const [files, totalSpace] = await Promise.all([
-  //   getFiles({ types, searchText, sort }),
-  //   getTotalSpaceUsed(),
-  // ]);
-
   const files = await getFiles({ types, searchText, sort });
   let size = 0;
   for (let i = 0; i < files.documents.length; i++) {
